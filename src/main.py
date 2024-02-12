@@ -53,6 +53,17 @@ def bruteforce_combination(titik, buffer, arah, validasi, matriks, list_kombinas
 
         arr_kombinasi.pop()
 
+def is_subarray(subarray, array):
+    len_subarray = len(subarray)
+    len_array = len(array)
+
+    for i in range(len_array - len_subarray + 1):
+        if array[i:i + len_subarray] == subarray:
+            return True
+    
+    return False
+
+
 
 #Buat nyari semua kombinasi untuk ukuran buffer tertentu
 def origin_bruteforce_combination(matriks, buffer):
@@ -67,15 +78,9 @@ def origin_bruteforce_combination(matriks, buffer):
 
     print(list_kombinasi_global)
 
-def is_subarray(subarray, array):
-    len_subarray = len(subarray)
-    len_array = len(array)
 
-    for i in range(len_array - len_subarray + 1):
-        if array[i:i + len_subarray] == subarray:
-            return True
-    
-    return False
+
+
 
 
 
