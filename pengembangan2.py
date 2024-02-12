@@ -125,15 +125,58 @@ def find_best_combines(matriks, buffer, matriks_sekuens):
         langkah_koordinat = []
 
     return matriks_sekuens_terpilih, jumlah_pembanding, langkah_koordinat
+
+
+def read_input(file_path):
+
+    with open(file_path, 'r') as file:
+
+        #ukuran buffer
+        ukuran_buffer = int(file.readline().strip())
+
+        # kolom
+        kolom, baris = map(int, file.readline().strip().split())
+
+        #matrix
+        matrix = [list(file.readline().strip().split()) for _ in range(baris)]
+
+        #banyak sekuens
+        banyak_sekuens = int(file.readline().strip())
+
+        arr_sekuens = []
+
+        for _ in range(banyak_sekuens):
+            sekuens = file.readline().strip().split()
+            reward = int(file.readline().strip())
+            arr_sekuens.append((sekuens, reward))
+            
+    return ukuran_buffer, kolom, baris, matrix, banyak_sekuens, arr_sekuens
+
+
+
+
+# ukuran_buffer, kolom, baris, matrix, banyak_sekuens, arr_sekuens = read_input('input.txt')
+
+# # print(ukuran_buffer)
+# # print(kolom)
+# # print(baris)
+# # print(matrix)
+# # print(banyak_sekuens)
+# # print(arr_sekuens)
+
+
+        
+
                 
                 
-matriks = [['A','B'],
-           ['D','E'],
-           ['I','K']
-           ]
-buffer = 4
+# matriks = [['A','B'],
+#            ['D','E'],
+#            ['I','K']
+#            ]
+# buffer = 4
 
 
-matriks_sekuens = [(['A', 'D', 'E'], 15), (['A', 'I', 'K'], 20), (['A','D','E','K'], 30)]
+# matriks_sekuens = [(['A', 'D', 'E'], 15), (['A', 'I', 'K'], 20), (['A','D','E','K'], 30)]
 
-print(find_best_combines(matriks, buffer, matriks_sekuens))
+# print(find_best_combines(matriks, buffer, matriks_sekuens))
+
