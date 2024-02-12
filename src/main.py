@@ -1,3 +1,4 @@
+#Buat nyari kemungkinan pergerakan, syarat : arah udah diketahui
 def find_move(arah, titik, matriks, validasi):
     baris = len(matriks)
     kolom = len(matriks[0])
@@ -13,6 +14,7 @@ def find_move(arah, titik, matriks, validasi):
                 move.append((titik[0],j))
     return move
 
+#Rekursif buat nyari kombinasi
 def bruteforce_combination(titik, buffer, arah, validasi, matriks, list_kombinasi_global, arr_kombinasi):
     baris = len(matriks)
     kolom = len(matriks[0])
@@ -52,6 +54,7 @@ def bruteforce_combination(titik, buffer, arah, validasi, matriks, list_kombinas
         arr_kombinasi.pop()
 
 
+#Buat nyari semua kombinasi untuk ukuran buffer tertentu
 def origin_bruteforce_combination(matriks, buffer):
 
     baris = len(matriks)
@@ -64,12 +67,25 @@ def origin_bruteforce_combination(matriks, buffer):
 
     print(list_kombinasi_global)
 
+def is_subarray(subarray, array):
+    len_subarray = len(subarray)
+    len_array = len(array)
+
+    for i in range(len_array - len_subarray + 1):
+        if array[i:i + len_subarray] == subarray:
+            return True
+    
+    return False
+
+
+
+
 
 # TESS
-matriks = [['A','B','C'],
-           ['D','E','F'],
-           ['G','H','I']
-           ]
-buffer = 4
+# matriks = [['A','B','C'],
+#            ['D','E','F'],
+#            ['G','H','I']
+#            ]
+# buffer = 4
 
-origin_bruteforce_combination(matriks, buffer)
+# origin_bruteforce_combination(matriks, buffer)
