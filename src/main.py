@@ -193,19 +193,21 @@ def read_input(file_path):
 def hasilkan_sekuens(tokens, jumlah_sekuens, ukuran_maksimal_sekuens):
     sekuens_unik = []
 
-    def hasilkan_kombinasi(sekuens, sisa_ukuran):
+    def hasilkan_kombinasi(sekuens, sisa_ukuran, panjang_saat_ini):
         if sisa_ukuran == 0:
             nilai_acak = random.randint(-100, 100)
             sekuens_unik.append((sekuens[:], nilai_acak))  
             return
+        if panjang_saat_ini >= ukuran_maksimal_sekuens:
+            return
         for token in tokens:
             sekuens_baru = sekuens + [token]
-            hasilkan_kombinasi(sekuens_baru, sisa_ukuran - 1)
+            hasilkan_kombinasi(sekuens_baru, sisa_ukuran - 1, panjang_saat_ini + 1)
 
     for panjang in range(2, ukuran_maksimal_sekuens + 1):
-        hasilkan_kombinasi([], panjang)
+        hasilkan_kombinasi([], panjang, 0)
 
-    sekuens_terpilih = sekuens_unik[:jumlah_sekuens]
+    sekuens_terpilih = random.sample(sekuens_unik, jumlah_sekuens)
 
     return sekuens_terpilih
 
@@ -219,6 +221,7 @@ def hasilkan_matriks(tokens, jumlah_baris, jumlah_kolom):
         for kolom in range(jumlah_kolom):
             matriks[baris][kolom] = tokens[indeks_token]
             indeks_token = (indeks_token + 1) % len(tokens)
+        random.shuffle(tokens)
 
     return matriks
 
