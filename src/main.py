@@ -187,8 +187,6 @@ def read_input(file_path):
             arr_sekuens.append((sekuens, reward))
             
     return ukuran_buffer, kolom, baris, matrix, banyak_sekuens, arr_sekuens
-
-
 #Generate Sekuens
 def hasilkan_sekuens(tokens, jumlah_sekuens, ukuran_maksimal_sekuens):
     sekuens_unik = []
