@@ -1,4 +1,3 @@
-#Buat nyari kemungkinan pergerakan, syarat : arah udah diketahui
 def find_move(arah, titik, matriks, validasi):
     baris = len(matriks)
     kolom = len(matriks[0])
@@ -14,7 +13,6 @@ def find_move(arah, titik, matriks, validasi):
                 move.append((titik[0],j))
     return move
 
-#Rekursif buat nyari kombinasi
 def bruteforce_combination(titik, buffer, arah, validasi, matriks, list_kombinasi_global, arr_kombinasi):
     baris = len(matriks)
     kolom = len(matriks[0])
@@ -24,21 +22,24 @@ def bruteforce_combination(titik, buffer, arah, validasi, matriks, list_kombinas
         arr_kombinasi.append(matriks[titik[0]][titik[1]])
 
         validasi[titik[0]][titik[1]] = True
-        
+
         #print(validasi)
+
+        validasi = [[False for k in range(kolom)] for j in range(baris)]
 
         list_kombinasi_global.append(arr_kombinasi.copy()) 
 
         arr_kombinasi.pop()
 
     else:
-        
+
         arr_kombinasi.append(matriks[titik[0]][titik[1]])
         validasi[titik[0]][titik[1]] = True
-            
+
         list_move = find_move(arah, titik, matriks, validasi)
 
         #print(validasi)
+        #validasi[titik[0]][titik[1]] = False
 
         if arah == 'V':
             arah_berikutnya = 'H'
@@ -48,24 +49,12 @@ def bruteforce_combination(titik, buffer, arah, validasi, matriks, list_kombinas
         for titik_lanjutan in list_move:
 
             bruteforce_combination(titik_lanjutan, buffer-1, arah_berikutnya, validasi, matriks, list_kombinasi_global, arr_kombinasi)
-
             validasi = [[False for k in range(kolom)] for j in range(baris)]
-        
+
+        #validasi = [[False for k in range(kolom)] for j in range(baris)]
         arr_kombinasi.pop()
 
-def is_subarray(subarray, array):
-    len_subarray = len(subarray)
-    len_array = len(array)
 
-    for i in range(len_array - len_subarray + 1):
-        if array[i:i + len_subarray] == subarray:
-            return True
-    
-    return False
-
-
-
-#Buat nyari semua kombinasi untuk ukuran buffer tertentu
 def origin_bruteforce_combination(matriks, buffer):
 
     baris = len(matriks)
@@ -80,17 +69,10 @@ def origin_bruteforce_combination(matriks, buffer):
 
 
 
-
-
-
-
-
-
 # TESS
 matriks = [['A','B'],
-           ['D','E'],
-           ['G','H']
+           ['C','D'],
            ]
-buffer = 4
+buffer = 6
 
 origin_bruteforce_combination(matriks, buffer)

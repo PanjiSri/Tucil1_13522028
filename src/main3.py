@@ -52,11 +52,12 @@ def bruteforce_combination(titik, buffer, arah, validasi, matriks, list_kombinas
         elif arah == 'H':
             arah_berikutnya = 'V'
 
-        for titik_lanjutan in list_move:
+        # print("Ini list move")
+        # print(list_move)
 
+        for titik_lanjutan in list_move:
             bruteforce_combination(titik_lanjutan, buffer-1, arah_berikutnya, validasi, matriks, list_kombinasi_global, arr_kombinasi, koordinat, arr_koordniat)
-            # validasi = [[False for k in range(kolom)] for j in range(baris)]
-            validasi[titik_lanjutan[0]][titik_lanjutan[1]] = False
+            validasi = [[False for k in range(kolom)] for j in range(baris)]
 
         arr_kombinasi.pop()
         arr_koordniat.pop()
@@ -95,33 +96,34 @@ def origin_bruteforce_combination(matriks, buffer):
         validasi = [[False for k in range(kolom)] for j in range(baris)]
         bruteforce_combination((0,i), buffer, 'V', validasi, matriks, list_kombinasi_global, [], koordinat, [])
 
+    for i in list_kombinasi_global:
+        if i[0] == '7A':
+            print(i)
+
     return list_kombinasi_global, koordinat
 
 
 def find_best_combines(matriks, buffer, matriks_sekuens):
 
-    #print(list_kombinasi_global)
     jumlah_pembanding = 0
 
     matriks_sekuens_terpilih = []
 
-    for i in range(1, buffer+1):
+    list_kombinasi_global, list_koordinat = origin_bruteforce_combination(matriks, buffer)
 
-        list_kombinasi_global, list_koordinat = origin_bruteforce_combination(matriks, i)
-
-        for kombinasi in list_kombinasi_global:
-            #rint(kombinasi)
-            jumlah_sementara = 0
-            for sekuens in matriks_sekuens:
-                #print(sekuens)
-                if is_subarray(sekuens[0], kombinasi):
-                    count = count_subarrays(sekuens[0],kombinasi)
-                    temp = count * sekuens[1]
-                    jumlah_sementara = jumlah_sementara + temp
-            if jumlah_sementara > jumlah_pembanding:
-                # print(kombinasi, jumlah_sementara)
-                jumlah_pembanding = jumlah_sementara
-                matriks_sekuens_terpilih = kombinasi
+    for kombinasi in list_kombinasi_global:
+        # print(kombinasi)
+        jumlah_sementara = 0
+        for sekuens in matriks_sekuens:
+            #print(sekuens)
+            if is_subarray(sekuens[0], kombinasi):
+                count = count_subarrays(sekuens[0],kombinasi)
+                temp = count * sekuens[1]
+                jumlah_sementara = jumlah_sementara + temp
+        if jumlah_sementara > jumlah_pembanding:
+            # print(kombinasi, jumlah_sementara)
+            jumlah_pembanding = jumlah_sementara
+            matriks_sekuens_terpilih = kombinasi
     
     if matriks_sekuens_terpilih != []:
         index = list_kombinasi_global.index(matriks_sekuens_terpilih)
@@ -130,88 +132,20 @@ def find_best_combines(matriks, buffer, matriks_sekuens):
         langkah_koordinat = []
 
     return matriks_sekuens_terpilih, jumlah_pembanding, langkah_koordinat
-
-
-def read_input(file_path):
-
-    with open(file_path, 'r') as file:
-
-        #ukuran buffer
-        ukuran_buffer = int(file.readline().strip())
-
-        # kolom
-        kolom, baris = map(int, file.readline().strip().split())
-
-        #matrix
-        matrix = [list(file.readline().strip().split()) for _ in range(baris)]
-
-        #banyak sekuens
-        banyak_sekuens = int(file.readline().strip())
-
-        arr_sekuens = []
-
-        for _ in range(banyak_sekuens):
-            sekuens = file.readline().strip().split()
-            reward = int(file.readline().strip())
-            arr_sekuens.append((sekuens, reward))
-            
-    return ukuran_buffer, kolom, baris, matrix, banyak_sekuens, arr_sekuens
-
-
-
-
-ukuran_buffer, kolom, baris, matrix, banyak_sekuens, arr_sekuens = read_input('input.txt')
-
-print(find_best_combines(matrix, ukuran_buffer, arr_sekuens))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# print(matrix)
-# print(arr_sekuens)
-# print(ukuran_buffer)
-
-#print(origin_bruteforce_combination(matrix, ukuran_buffer))
-
-#print(find_best_combines(matrix, ukuran_buffer, arr_sekuens))
-
-# # print(ukuran_buffer)
-# # print(kolom)
-# # print(baris)
-# # print(matrix)
-# # print(banyak_sekuens)
-# # print(arr_sekuens)
-
-
-        
-
                 
                 
-# matriks = [['A','B'],
-#            ['D','E'],
-#            ['I','K']
-#            ]
-# buffer = 4
+matriks = [['7A', '55', 'E9', 'E9', '1C', '55'], 
+           ['55', '7A', '1C', '7A', 'E9', '55'], 
+           ['55', '1C', '1C', '55', 'E9', 'BD'], 
+           ['BD', '1C', '7A', '1C', '55', 'BD'], 
+           ['BD', '55', 'BD', '7A', '1C', '1C'], 
+           ['1C', '55', '55', '7A', '55', '7A']]
 
+#matriks = [['A','B','C'],['D','E','F'],['G','H','I']]
+buffer = 6
 
-# matriks_sekuens = [(['A', 'D', 'E'], 15), (['A', 'I', 'K'], 20), (['A','D','E','K'], 30)]
+origin_bruteforce_combination(matriks, buffer)
+
+# matriks_sekuens = [(['BD', 'E9', '1C'], 15), (['BD', '7A', 'BD'], 20), (['BD','1C','BD','55'], 30)]
 
 # print(find_best_combines(matriks, buffer, matriks_sekuens))
-
